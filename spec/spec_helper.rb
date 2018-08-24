@@ -1,8 +1,10 @@
 require 'simplecov'
 require 'simplecov-console'
 require 'factory_bot'
+require './app/weather_report'
 require './app/airport'
 require './app/plane'
+require './app/traffic_control'
 require 'byebug'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
