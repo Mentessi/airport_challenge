@@ -1,6 +1,7 @@
 require 'simplecov'
 require 'simplecov-console'
 require 'factory_bot'
+require './app/plane'
 require 'byebug'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
