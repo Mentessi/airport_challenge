@@ -1,5 +1,7 @@
 class Plane
 
+  IN_AIR = :in_air
+
   attr_accessor :location
 
   def initialize(location)
@@ -11,6 +13,6 @@ class Plane
   end
 
   def take_off
-    self.location = 'in air'
+    self.location = IN_AIR
   end
 end

@@ -16,6 +16,6 @@ RSpec.describe 'Plane' do
 
   it 'it knows when it is in the air ' do
     plane.take_off
-    expect(plane.location).to eq 'in air'
+    expect(plane.location).to eq :in_air
   end
 end

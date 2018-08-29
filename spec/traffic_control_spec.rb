@@ -5,7 +5,7 @@ RSpec.describe 'traffic control' do
   let!(:weather) { FactoryBot.build :weather_report }
   let!(:traffic_control) { FactoryBot.build :traffic_control, weather: weather }
   let!(:gatwick_airport) { FactoryBot.build :airport }
-  let!(:plane) { FactoryBot.build :plane, location: 'in air' }
+  let!(:plane) { FactoryBot.build :plane, location: :in_air }
   let!(:heathrow_plane) { FactoryBot.build :plane, location: 'LHR' }
 
   before(:each) do
@@ -21,7 +21,7 @@ RSpec.describe 'traffic control' do
     traffic_control.instruct_to_land(plane, gatwick_airport)
     expect(plane.location).to eq 'LGW'
     traffic_control.instruct_to_take_off(plane, gatwick_airport)
-    expect(plane.location).to eq 'in air'
+    expect(plane.location).to eq :in_air
     expect(gatwick_airport.parked_planes).not_to include plane
   end
 
@@ -31,7 +31,7 @@ RSpec.describe 'traffic control' do
   end
 
   it 'cannot instruct a plane take off that is already in the air' do
-    expect(plane.location).to eq 'in air'
+    expect(plane.location).to eq :in_air
     expect { traffic_control.instruct_to_take_off(plane, gatwick_airport) }.to raise_error 'Permission denied'
   end
 
