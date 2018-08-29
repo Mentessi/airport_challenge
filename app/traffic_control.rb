@@ -1,8 +1,11 @@
-require_relative 'weather_report'
 
 class TrafficControl
 
-  include WeatherReport
+  attr_reader :weather
+
+  def initialize(weather_report)
+    @weather = weather_report
+  end
 
   def instruct_to_land(plane, airport)
     raise 'Permission denied' if permission_to_land?(plane, airport) == false
@@ -26,7 +29,5 @@ class TrafficControl
     sunny? && airport.parking_bays.include?(plane)
   end
 
-  def sunny?
-    current_weather == 'sunny'
   end
 end

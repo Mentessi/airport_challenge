@@ -2,13 +2,14 @@ require 'spec_helper'
 
 RSpec.describe 'traffic control' do
 
-  let!(:traffic_control) { FactoryBot.build :traffic_control }
+  let!(:weather) { FactoryBot.build :weather_report }
+  let!(:traffic_control) { FactoryBot.build :traffic_control, weather: weather }
   let!(:gatwick_airport) { FactoryBot.build :airport }
   let!(:plane) { FactoryBot.build :plane, location: 'in air' }
   let!(:heathrow_plane) { FactoryBot.build :plane, location: 'LHR' }
 
   before(:each) do
-    allow(traffic_control).to receive(:sunny?) { true }
+    allow(traffic_control.weather).to receive(:sunny?) { true }
   end
 
   it 'can instruct a plane to land at an airport' do
@@ -40,12 +41,13 @@ RSpec.describe 'traffic control' do
   end
 
   it 'does not allow landings in bad weather' do
-    allow(traffic_control).to receive(:sunny?) { false }
+    allow(traffic_control.weather).to receive(:sunny?) { false }
     expect { traffic_control.instruct_to_land(plane, gatwick_airport) }.to raise_error 'Permission denied'
   end
 
   it 'does not allow take off in bad weather' do
-    allow(traffic_control).to receive(:sunny?) { false }
+    traffic_control.instruct_to_land(plane, gatwick_airport)
+    allow(traffic_control.weather).to receive(:sunny?) { false }
     expect { traffic_control.instruct_to_take_off(plane, gatwick_airport) }.to raise_error 'Permission denied'
   end
 end
