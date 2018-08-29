@@ -1,4 +1,3 @@
-
 class TrafficControl
 
   attr_reader :weather
@@ -8,13 +7,13 @@ class TrafficControl
   end
 
   def instruct_to_land(plane, airport)
-    raise 'Permission denied' if permission_to_land?(plane, airport) == false
+    raise 'Permission denied' unless permission_to_land?(plane, airport)
     plane.land airport
     airport.park_plane plane
   end
 
   def instruct_to_take_off(plane, airport)
-    raise 'Permission denied' if permission_to_take_off?(plane, airport) == false
+    raise 'Permission denied' unless permission_to_take_off?(plane, airport)
     plane.take_off
     airport.clear_parking_space plane
   end
@@ -22,12 +21,10 @@ class TrafficControl
   private
 
   def permission_to_land?(plane, airport)
-    sunny? && airport.parking_available? && plane.location == 'in air'
+    weather.sunny? && airport.parking_available? && plane.location == :in_air
   end
 
   def permission_to_take_off?(plane, airport)
-    sunny? && airport.parking_bays.include?(plane)
-  end
-
+    weather.sunny? && airport.parked_planes.include?(plane)
   end
 end

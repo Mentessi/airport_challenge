@@ -22,7 +22,7 @@ RSpec.describe 'traffic control' do
     expect(plane.location).to eq 'LGW'
     traffic_control.instruct_to_take_off(plane, gatwick_airport)
     expect(plane.location).to eq 'in air'
-    expect(gatwick_airport.parking_bays).not_to include plane
+    expect(gatwick_airport.parked_planes).not_to include plane
   end
 
   it 'cannot land a plane that is already on the ground' do
